@@ -34,3 +34,6 @@ base44/.app.jsonc
 *.njsproj
 *.sln
 *.sw?
+
+# `vercel link` writes a short-lived VERCEL_OIDC_TOKEN into .env.local.
+.env*
