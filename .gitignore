@@ -1,0 +1,36 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Launch-video output from /brag. It isn't part of the site, and Tailwind v4
+# scans every non-ignored file in the project for class names: the
+# `font-display: block` in this folder's @font-face rules was being read as a
+# class and adding a stray `.font-display` utility to the site's CSS.
+brag-output
+
+# Per-machine deploy links. The Base44 CLI writes .app.jsonc and asks for it to
+# stay out of version control (the deploy scripts pass --app-id explicitly, so
+# nothing depends on it); `vercel link` writes .vercel.
+base44/.app.jsonc
+.vercel
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

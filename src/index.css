@@ -1,0 +1,287 @@
+@import "tailwindcss";
+
+/* Stage-Grotesk is Zilla's licensed brand face and isn't distributable here,
+   so Inter Tight (loaded in index.html) carries the design for now.
+   To switch to the real thing: drop StageGrotesk-{Regular,Medium,Bold}.woff2
+   into public/fonts/ and uncomment the three rules below — "Stage-Grotesk"
+   already sits first in --font-display / --font-body, so nothing else needs
+   to change. They stay commented out because a declared @font-face with no
+   file behind it fires a failing request on every page load.
+
+@font-face {
+  font-family: "Stage-Grotesk";
+  src: url("/fonts/StageGrotesk-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Stage-Grotesk";
+  src: url("/fonts/StageGrotesk-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Stage-Grotesk";
+  src: url("/fonts/StageGrotesk-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+*/
+
+@theme {
+  /* ---- Surfaces -------------------------------------------------------- */
+  --color-ink: #000000;
+  --color-ink-2: #070807;
+  --color-ink-3: #101210;
+  --color-paper: #ededea;
+  --color-paper-2: #dededa;
+
+  /* ---- Brand ----------------------------------------------------------- */
+  /* Sampled straight out of the supplied logo artwork. */
+  --color-zilla: #00ce00;
+  --color-zilla-hi: #45ff6f;
+  --color-zilla-deep: #04390f;
+
+  /* ---- Neutrals -------------------------------------------------------- */
+  --color-mist-100: #f2f2f0;
+  --color-mist-200: #c9c9c6;
+  --color-mist-300: #8f8f8c;
+  --color-mist-400: #5c5c59;
+  --color-mist-500: #333330;
+  --color-mist-600: #1c1c1a;
+
+  --font-display: "Stage-Grotesk", "Inter Tight", system-ui, sans-serif;
+  --font-body: "Stage-Grotesk", "Inter Tight", system-ui, sans-serif;
+  /* Azeret Mono, not JetBrains/IBM Plex/Space Mono. Those three are the
+     reflex picks and read as stock developer-tooling; this is geometric and
+     a little odd, which suits a label that's structural rather than code.
+     Swap candidates with the same metrics-ish feel: "Martian Mono" (wider,
+     more industrial) or "DM Mono" (softer, more humanist). */
+  --font-mono: "Azeret Mono", ui-monospace, monospace;
+  /* Editorial counterpoint to the grotesk. Deliberately narrow in scope —
+     the marquee band only — so it stays an accent rather than a third
+     voice competing across the site. */
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+
+  /* --- Marquee voices -----------------------------------------------------
+     The band runs each word in a different typeface on purpose: it is the one
+     place the site argues that Zilla works across brands, so it should look
+     like several different wordmarks going past rather than one repeated.
+     Three maximally separated categories, not three similar sans faces:
+       Anton       condensed poster grotesque, all caps, loud
+       Bodoni Moda high-contrast didone, italic, luxury/editorial
+       Syne        contemporary display with odd proportions, art-directed
+     Confined to the marquee. They must not leak into body or headings. */
+  --font-anton: "Anton", "Arial Narrow", Impact, sans-serif;
+  --font-bodoni: "Bodoni Moda", Didot, "Times New Roman", serif;
+  --font-syne: "Syne", "Inter Tight", system-ui, sans-serif;
+
+  /* Long decelerate curve — every transition on the site rides this. */
+  --ease-zm: cubic-bezier(0.22, 1, 0.36, 1);
+  --tracking-display: -0.045em;
+}
+
+html {
+  background: #000;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-ink);
+  color: var(--color-mist-200);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Lenis owns the scroll position; these are its required host styles. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-zilla);
+  color: #000;
+}
+
+/* ---- Typography helpers ------------------------------------------------ */
+.display {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-display);
+  line-height: 0.92;
+  font-weight: 500;
+}
+
+/* Instrument Serif sets tight by default; uppercase needs a touch of air
+   put back or the caps jam together at marquee size. */
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  line-height: 1;
+}
+
+/* Marquee voices. Each carries its own case, weight and tracking as well as
+   its face — swapping only the family would still read as one brand set in
+   three fonts, which is not the point.
+
+   Each voice owns its full font-size rather than nudging with `em`. These
+   rules are unlayered, so they outrank Tailwind's utility layer: an `em`
+   here silently beat the `text-[clamp(...)]` on the element and resolved
+   against the 16px root instead, collapsing the whole band to ~17px. The
+   three clamps differ slightly because these faces have very different cap
+   heights at the same nominal size — Anton is condensed and needs more,
+   Syne is wide and needs less — and the band has to scan as one line. */
+.voice-anton {
+  font-family: var(--font-anton);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  font-size: clamp(1.65rem, 3vw, 3rem);
+  line-height: 1;
+}
+
+.voice-bodoni {
+  font-family: var(--font-bodoni);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.005em;
+  font-size: clamp(1.6rem, 2.85vw, 2.85rem);
+  line-height: 1;
+}
+
+.voice-syne {
+  font-family: var(--font-syne);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.4rem, 2.5vw, 2.5rem);
+  line-height: 1;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Button tracking.
+
+   .label ships 0.16em, which suits an eyebrow — a short run of caps with air
+   around it — but reads loose inside a pill where the words are boxed. Buttons
+   tighten to 0.1em. Applied to every button so they stay matched to each
+   other; nothing else using .label is affected.
+
+   After .label deliberately: both are single-class and unlayered, so source
+   order decides the winner. */
+.label-btn {
+  letter-spacing: 0.1em;
+}
+
+/* Optical compensation for buttons sitting on a dark ground.
+
+   These carry dark text on a light pill, and at identical metrics that reads
+   noticeably lighter and smaller than the reverse — light text on a dark
+   ground irradiates outward and gains apparent weight. Same phenomenon that
+   makes foundries ship lighter cuts for reversed text.
+
+   Size and tracking stay exactly equal to .label so the two variants really
+   are the same type; only the weight moves, 400 -> 500, which is what makes
+   them look equal. Must sit after .label to win — both are single-class and
+   unlayered, so source order decides, and Tailwind's own font-weight utility
+   would lose to .label entirely. Weight is deliberately not changed on hover:
+   it would reflow the pill mid-interaction. */
+.label-on-dark {
+  font-weight: 500;
+}
+
+/* Clip masks used by the line reveals.
+   Display type runs a 0.92 line-height, so the line box is *shorter* than the
+   glyphs it contains — descenders on y/g/p overhang it by ~0.22em and a plain
+   `overflow: hidden` shears them off. These give the mask room underneath and
+   take the same amount back as negative margin, so the clip grows without
+   shifting any layout. Anything using them must carry the display font-size
+   itself, since the em here resolves against the clipping element. */
+.line-clip {
+  overflow: hidden;
+  display: block;
+  padding-bottom: 0.26em;
+  margin-bottom: -0.26em;
+}
+
+/* Same idea for the hero's word-roll window, which masks horizontally too. */
+.roll-clip {
+  overflow: hidden;
+  padding-bottom: 0.26em;
+  margin-bottom: -0.26em;
+}
+
+/* ---- Custom cursor -----------------------------------------------------
+   `has-cursor` is added by Cursor.jsx only while the replacement cursor is
+   actually drawn, so the system pointer comes straight back if anything goes
+   wrong. Text fields keep their I-beam regardless: the ring can't tell you
+   where a click will drop the caret. */
+@media (hover: hover) and (pointer: fine) {
+  body.has-cursor,
+  body.has-cursor * {
+    cursor: none !important;
+  }
+  body.has-cursor input,
+  body.has-cursor textarea {
+    cursor: text !important;
+  }
+}
+
+/* ---- Link underline sweep ---------------------------------------------- */
+.sweep {
+  position: relative;
+  display: inline-block;
+}
+.sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15em;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.55s var(--ease-zm);
+}
+.sweep:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Elements that start hidden purely so an animation can reveal them. When
+   motion is off the reveal never runs, so the content has to be forced
+   visible or it would be permanently missing. */
+.anim-hidden {
+  opacity: 0;
+}
+
+/* ---- Reduced motion ---------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .anim-hidden {
+    opacity: 1 !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "zilla-media-site",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "build:staging": "vite build --mode staging",
+    "deploy:staging": "npm run build:staging && npx base44 --app-id 6a8f07cd5aadc307c9854738 site deploy --yes --no-build",
+    "deploy:prod": "npm run build && npx base44 --app-id 6a7ce728a921c6d7121626c7 site deploy --yes --no-build"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "ffmpeg-static": "^5.3.0",
+    "oxlint": "^1.75.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.0"
+  }
+}

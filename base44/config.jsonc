@@ -1,0 +1,18 @@
+// Base44 project configuration.
+// This site is a plain Vite SPA — no Base44 entities, functions or connectors —
+// so only the static hosting block is configured.
+{
+  "name": "Zilla Media",
+  "description": "Zilla Media studio site — motion-led marketing site with a WebGL hero",
+
+  // Starting workspace-only. Flip to "public" (here or via `base44 visibility
+  // public`) once the deployed build has been reviewed.
+  "visibility": "workspace",
+
+  "site": {
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "serveCommand": "npm run dev",
+    "outputDirectory": "./dist"
+  }
+}
